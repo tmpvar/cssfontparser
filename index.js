@@ -89,6 +89,14 @@ var op = {
   lineHeight: numeric
 };
 
+var generics = {
+  serif : 1,
+  'sans-serif': 1,
+  cursive: 1,
+  fantasy: 1,
+  monospace: 1
+};
+
 var parse = module.exports = function(str, existing, dpi) {
   var cacheKey = str + '-' + (existing || 'null') +'@' + dpi;
 
@@ -175,6 +183,11 @@ var parse = module.exports = function(str, existing, dpi) {
   var family = collected.family.split(',');
   collected.family = family.map(function(a) {
     a = a.trim();
+
+    if (generics[a.toLowerCase()]) {
+      a = a.toLowerCase();
+    }
+
     if (a.indexOf(' ') > -1) {
       return '"' + a.replace(/["']/g, '') + '"';
     } else {

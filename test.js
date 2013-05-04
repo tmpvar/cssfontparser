@@ -3,6 +3,7 @@ var parse = require('./index');
 
 assert.ok(!parse('inherit'));
 assert.ok(!parse('bogus'));
+assert.ok(!parse('10px {bogus}'));
 assert.ok(!parse('10px inherit'));
 
 assert.deepEqual(parse('inherit', '10px serif'), {
@@ -65,6 +66,19 @@ assert.deepEqual(parse('italic small-caps bolder 10px/20px serif'), {
   family: 'serif'
 });
 
+
+// Generic font families
+[
+  'serif',
+  'sans-serif',
+  'cursive',
+  'fantasy',
+  'monospace'
+].forEach(function(generic){
+  assert.equal(parse('12px  ' + generic.toUpperCase()).family, generic);
+});
+
+
 // DPI/units
 assert.equal(parse('10px serif').size, 10);
 assert.equal(parse('10px serif', null, 200).size, 10);
@@ -93,4 +107,4 @@ assert.equal(parse('5000% sans-serif', '12pt serif', null, 96).size, 800);
 // Serialization
 var o = parse('italic 400 12px/2 Unknown Font, sans-serif');
 assert.equal(o.toString(), 'italic 12px "Unknown Font", sans-serif');
-
+assert.equal(parse('12px   SERIF').toString(), '12px serif');

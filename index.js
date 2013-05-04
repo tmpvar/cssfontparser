@@ -9,7 +9,7 @@ var fontRegex = new RegExp([
   '(?=(?:(?:[-a-z]+\\s*){0,2}(bold(?:er)?|lighter|[1-9]00 ))?)',
   '(?:(?:normal|\\1|\\2|\\3)\\s*){0,3}((?:xx?-)?',
   '(?:small|large)|medium|smaller|larger|[\\.\\d]+(?:\\%|in|[cem]m|ex|p[ctx]))',
-  '(?:\\s*\\/\\s*(normal|[\\.\\d]+(?:\\%|in|[cem]m|ex|p[ctx])))',
+  '(?:\\s*\\/\\s*(normal|[\\.\\d]+(?:\\%|in|[cem]m|ex|p[ctx])?))',
   '?\\s*([-,\\"\\sa-z]+?)\\s*$'
 ].join(''), 'i');
 
@@ -125,6 +125,7 @@ var parse = module.exports = function(str, existing, dpi) {
       val = op[key](val, existingVal, dpi);
     }
 
+
     if (!val || val === 'normal') {
       continue;
     } else if (val === 'inherit') {
@@ -134,6 +135,10 @@ var parse = module.exports = function(str, existing, dpi) {
       }
 
       val = existing[key];
+    }
+
+    if (val.trim) {
+      val = val.trim();
     }
 
     collected[key] = val;
@@ -154,7 +159,10 @@ var parse = module.exports = function(str, existing, dpi) {
     out.push(collected.variant);
   }
 
-  if (collected.weight) {
+  if (collected.weight &&
+      collected.weight !== '400' &&
+      collected.weight !== 'normal')
+  {
     out.push(collected.weight);
   }
 
@@ -163,6 +171,16 @@ var parse = module.exports = function(str, existing, dpi) {
   if (collected.lineHeight) {
     out[out.length-1] += '/' + collected.lineHeight + 'px';
   }
+
+  var family = collected.family.split(',');
+  collected.family = family.map(function(a) {
+    a = a.trim();
+    if (a.indexOf(' ') > -1) {
+      return '"' + a.replace(/["']/g, '') + '"';
+    } else {
+      return a;
+    }
+  }).join(', ');
 
   out.push(collected.family);
 

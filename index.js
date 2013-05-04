@@ -145,5 +145,32 @@ var parse = module.exports = function(str, existing, dpi) {
 
   cache[cacheKey] = collected;
 
+  var out = [];
+  if (collected.style) {
+    out.push(collected.style);
+  }
+
+  if (collected.variant) {
+    out.push(collected.variant);
+  }
+
+  if (collected.weight) {
+    out.push(collected.weight);
+  }
+
+  out.push(collected.size + 'px');
+
+  if (collected.lineHeight) {
+    out[out.length-1] += '/' + collected.lineHeight + 'px';
+  }
+
+  out.push(collected.family);
+
+  Object.defineProperty(collected, 'toString', {
+    value: function() {
+      return out.join(' ');
+    }
+  });
+
   return collected;
 };

@@ -5,6 +5,7 @@ assert.ok(!parse('inherit'));
 assert.ok(!parse('bogus'));
 assert.ok(!parse('10px {bogus}'));
 assert.ok(!parse('10px inherit'));
+assert.ok(parse.generics);
 
 assert.deepEqual(parse('inherit', '10px serif'), {
   size: 10,

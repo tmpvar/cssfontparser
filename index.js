@@ -214,3 +214,5 @@ var parse = module.exports = function(str, existing, dpi) {
 
   return collected;
 };
+
+module.exports.generics = generics;

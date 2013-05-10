@@ -188,18 +188,27 @@ var parse = module.exports = function(str, existing, dpi) {
       a = a.toLowerCase();
     }
 
-    if (a.indexOf(' ') > -1) {
-      return '"' + a.replace(/["']/g, '') + '"';
-    } else {
-      return a;
-    }
-  }).join(', ');
+    return a;
+  });
 
   out.push(collected.family);
 
+
   Object.defineProperty(collected, 'toString', {
     value: function() {
-      return out.join(' ');
+      return out.map(function(val) {
+        if (Array.isArray(val)) {
+          return val.map(function(a) {
+            if (a.indexOf(' ') > -1) {
+              return '"' + a.replace(/["']/g, '') + '"';
+            } else {
+              return a;
+            }
+          }).join(', ');
+        } else {
+          return val;
+        }
+      }).join(' ');
     }
   });
 

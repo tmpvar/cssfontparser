@@ -8,37 +8,37 @@ assert.ok(!parse('10px inherit'));
 
 assert.deepEqual(parse('inherit', '10px serif'), {
   size: 10,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('10px serif'), {
   size: 10,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('bold 10px serif'), {
   weight: 'bold',
   size: 10,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('10px/20px serif'), {
   size: 10,
   lineHeight: 20,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('bolder 10px/20px serif'), {
   weight: 'bolder',
   size: 10,
   lineHeight: 20,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('normal 10px/20px serif'), {
   size: 10,
   lineHeight: 20,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('italic bolder 10px/20px serif'), {
@@ -46,7 +46,7 @@ assert.deepEqual(parse('italic bolder 10px/20px serif'), {
   weight: 'bolder',
   size: 10,
   lineHeight: 20,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('italic normal bolder 10px/20px serif'), {
@@ -54,7 +54,7 @@ assert.deepEqual(parse('italic normal bolder 10px/20px serif'), {
   weight: 'bolder',
   size: 10,
   lineHeight: 20,
-  family: 'serif'
+  family: ['serif']
 });
 
 assert.deepEqual(parse('italic small-caps bolder 10px/20px serif'), {
@@ -63,7 +63,7 @@ assert.deepEqual(parse('italic small-caps bolder 10px/20px serif'), {
   weight: 'bolder',
   size: 10,
   lineHeight: 20,
-  family: 'serif'
+  family: ['serif']
 });
 
 
@@ -75,7 +75,7 @@ assert.deepEqual(parse('italic small-caps bolder 10px/20px serif'), {
   'fantasy',
   'monospace'
 ].forEach(function(generic){
-  assert.equal(parse('12px  ' + generic.toUpperCase()).family, generic);
+  assert.equal(parse('12px  ' + generic.toUpperCase()).family[0], generic);
 });
 
 
@@ -107,4 +107,7 @@ assert.equal(parse('5000% sans-serif', '12pt serif', null, 96).size, 800);
 // Serialization
 var o = parse('italic 400 12px/2 Unknown Font, sans-serif');
 assert.equal(o.toString(), 'italic 12px "Unknown Font", sans-serif');
+assert.equal(o.family.length, 2);
+assert.equal(o.family[0], 'Unknown Font');
+assert.equal(o.family[1], 'sans-serif');
 assert.equal(parse('12px   SERIF').toString(), '12px serif');

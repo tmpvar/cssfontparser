@@ -10,7 +10,7 @@ var fontRegex = new RegExp([
   '(?:(?:normal|\\1|\\2|\\3)\\s*){0,3}((?:xx?-)?',
   '(?:small|large)|medium|smaller|larger|[\\.\\d]+(?:\\%|in|[cem]m|ex|p[ctx]))',
   '(?:\\s*\\/\\s*(normal|[\\.\\d]+(?:\\%|in|[cem]m|ex|p[ctx])?))',
-  '?\\s*([-,\\"\\sa-z]+?)\\s*$'
+  '?\\s*([-,\\"\\\'\\sa-z]+?)\\s*$'
 ].join(''), 'i');
 
 

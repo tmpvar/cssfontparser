@@ -67,6 +67,11 @@ assert.deepEqual(parse('italic small-caps bolder 10px/20px serif'), {
   family: ['serif']
 });
 
+assert.deepEqual(parse('700 18px \'Raleway\', sans-serif'), {
+  size: 18,
+  weight: '700',
+  family: ['\'Raleway\'', 'sans-serif']
+});
 
 // Generic font families
 [

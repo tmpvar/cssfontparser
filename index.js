@@ -130,7 +130,12 @@ var parse = module.exports = function(str, existing, dpi) {
 
     if (op[key] && val) {
       var existingVal = (existing) ? existing[key] || null : null;
-      val = op[key](val, existingVal, dpi);
+      var v = op[key](val, existingVal, dpi);
+      if (typeof v === 'undefined' && key === 'lineHeight' && val) {
+        val = collected.size * parseFloat(val);
+      } else {
+        val = v;
+      }
     }
 
 

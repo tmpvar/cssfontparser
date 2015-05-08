@@ -119,7 +119,7 @@ assert.equal(parse('5000% sans-serif', '12pt serif', null, 96).size, 800);
 
 // Serialization
 var o = parse('italic 400 12px/2 Unknown Font, sans-serif');
-assert.equal(o.toString(), 'italic 12px "Unknown Font", sans-serif');
+assert.equal(o.toString(), 'italic 12px/24px "Unknown Font", sans-serif');
 assert.equal(o.family.length, 2);
 assert.equal(o.family[0], 'Unknown Font');
 assert.equal(o.family[1], 'sans-serif');

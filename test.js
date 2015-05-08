@@ -1,6 +1,7 @@
 var assert = require('assert');
 var parse = require('./index');
 
+
 assert.ok(!parse('inherit'));
 assert.ok(!parse('bogus'));
 assert.ok(!parse('10px {bogus}'));
@@ -56,6 +57,12 @@ assert.deepEqual(parse('italic normal bolder 10px/20px serif'), {
   size: 10,
   lineHeight: 20,
   family: ['serif']
+});
+
+assert.deepEqual(parse('16px/1.2 Georgia,serif'), {
+  size: 16,
+  lineHeight: 19.2,
+  family: ['Georgia', 'serif']
 });
 
 assert.deepEqual(parse('italic small-caps bolder 10px/20px serif'), {

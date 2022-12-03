@@ -41,3 +41,5 @@ console.log(obj.toString());
 _note_: a `parent font string` is required for `em` and `%` size calculations.
 
 # license
+
+[MIT](./LICENSE.txt)
